@@ -1,0 +1,65 @@
+﻿<Window x:Class="ERC.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ERC.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        ResizeMode="NoResize">
+
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <StackPanel Margin="447,26,127,390">
+
+        </StackPanel>
+        <TextBox Name ="textBoxCountPeople" Text="{Binding CountPeople, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="320,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
+
+        </TextBox>
+        <Label Content="Количество людей проживающих в помещении:" HorizontalAlignment="Left" Margin="36,22,0,0" VerticalAlignment="Top" Width="279"/>
+        <Label Content="Показания по ХВС:" HorizontalAlignment="Left" Margin="36,53,0,0" VerticalAlignment="Top" Width="279"/>
+        <Label Content="Показания по ГВС:" HorizontalAlignment="Left" Margin="36,84,0,0" VerticalAlignment="Top" Width="279"/>
+        <Label Content="Показания по ЭЭ:" HorizontalAlignment="Left" Margin="36,115,0,0" VerticalAlignment="Top" Width="279"/>
+        <TextBox Name ="textBoxColdWater"  Text="{Binding CWC, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="320,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="{Binding IsColdWater_Checked}"/>
+        <TextBox Name ="textBoxHotWater"  Text="{Binding HWC, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="320,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="{Binding IsHotWater_Checked}"/>
+        <TextBox Name ="textBoxElectricDay"  Text="{Binding EEDay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="375,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="{Binding IsElectricity_Checked}"/>
+        <TextBox Name ="textBoxElectricNight"  Text="{Binding EENight, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="553,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="{Binding IsElectricity_Checked}"/>
+        <Button Name="buttonCalculate" Content="Рассчитать" Command ="{Binding buttonCalculate}" HorizontalAlignment="Left" Margin="320,142,0,0" VerticalAlignment="Top" Width="353"/>
+        <Button Name="buttonSave" Content="Сохранить" Command ="{Binding buttonSave}" HorizontalAlignment="Left" Margin="320,167,0,0" VerticalAlignment="Top" Width="353"/>
+        <CheckBox Name="isColdWater" HorizontalAlignment="Left" Margin="15,58,0,0" VerticalAlignment="Top" IsChecked="{Binding IsColdWater_Checked}"/>
+        <CheckBox Name="isHotWater" HorizontalAlignment="Left" Margin="15,89,0,0" VerticalAlignment="Top" IsChecked="{Binding IsHotWater_Checked}"/>
+        <CheckBox Name="isElectricity"  HorizontalAlignment="Left" Margin="15,120,0,0" VerticalAlignment="Top" IsChecked="{Binding IsElectricity_Checked}"/>
+        <Label Content="День:" HorizontalAlignment="Left" Margin="322,111,0,0" VerticalAlignment="Top" Width="58"/>
+        <Label Content="Ночь:" HorizontalAlignment="Left" Margin="505,111,0,0" VerticalAlignment="Top" Width="60"/>
+        <StackPanel Margin="0,192,0,0">
+        <DataGrid Name="BooksDataGrid" ItemsSource="{Binding CalculationsPrint}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="name" Header="Услуга" Binding="{Binding Name}"/>
+                <DataGridTextColumn x:Name="unit" Header="Ед.изм" Binding="{Binding Unit}"/>
+                <DataGridTextColumn x:Name="size" Header="Объем" Binding="{Binding Size}"/>
+                <DataGridTextColumn x:Name="rate" Header="Тариф" Binding="{Binding Rate}"/>
+                <DataGridTextColumn x:Name="price" Header="Размер платы" Binding="{Binding Price}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" Background="GhostWhite" HorizontalAlignment="Left" Margin="10,0,0,0">
+            <Grid Width="{Binding ElementName=name, Path=ActualWidth}">
+                <TextBlock Text="Итого" />
+            </Grid>
+            <Grid Width="{Binding ElementName=unit, Path=ActualWidth}">
+                <TextBlock Text="" TextAlignment="Right"/>
+            </Grid>
+            <Grid Width="{Binding ElementName=size, Path=ActualWidth}">
+                <TextBlock Text="" TextAlignment="Right"/>
+            </Grid>
+            <Grid Width="{Binding ElementName=rate, Path=ActualWidth}">
+                <TextBlock Text="" TextAlignment="Right"/>
+            </Grid>
+            <Grid Width="{Binding ElementName=price, Path=ActualWidth}">
+                <TextBlock Text="{Binding Total}"/>
+            </Grid>
+        </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
